@@ -33,12 +33,23 @@ export default function PuzzleGame() {
   };
 
   useEffect(() => {
+    // Force Fullscreen on game start
+    document.documentElement.requestFullscreen().catch(() => {});
+
     generateMatrix();
     document.addEventListener("contextmenu", (e) => e.preventDefault());
     document.addEventListener("keydown", (e) => {
       if ((e.ctrlKey && e.key === "u") || e.key === "F12") e.preventDefault();
+      if (status === "lose") {
+        // Prevent browser exit attempts for 10 seconds after losing
+        e.preventDefault();
+      }
     });
-  }, []);
+
+    return () => {
+      document.removeEventListener("keydown", () => {});
+    };
+  }, [status]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +59,11 @@ export default function PuzzleGame() {
       setStatus("lose");
       setFullScreen(true);
       document.documentElement.requestFullscreen().catch(() => {});
+      // Prevent exit for 10 seconds if they lose
+      setTimeout(() => {
+        window.onbeforeunload = null; // Allow exit after 10 seconds
+      }, 10000);
+      window.onbeforeunload = () => "Are you sure you want to leave?";
     }
   };
 
