@@ -71,7 +71,7 @@ export default function PuzzleGame() {
     <div className="min-h-screen bg-black text-green-400 font-mono p-4 flex flex-col items-center justify-center">
       {status === "start" && (
         <div className="space-y-6 text-center">
-          <h1 className="text-xl">🔐 Terminal Puzzle Challenge</h1>
+          <h1 className="text-xl">🔐 Find me if you can 😴</h1>
           <p>You have only ONE try to decode the coordinates.</p>
           <div className="grid grid-cols-5 gap-2 text-xs mt-4">
             {hashMatrix.map((row, i) =>
